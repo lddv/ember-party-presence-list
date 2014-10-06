@@ -16,7 +16,18 @@ App.GuestsRoute = Ember.Route.extend({
 // CONTROLLER
 App.GuestsController = Ember.ArrayController.extend({
   sortProperties: ['name'],
-  itemController: 'guest'
+  itemController: 'guest',
+
+  searchFilter: '',
+  filteredPeople: Ember.computed.filter('model', function(person){
+      var searchFilter = this.get('searchFilter');
+      var regex = new RegExp(searchFilter, 'i');
+      return person.name.match(regex);
+  }).property('model','searchFilter'),
+
+  actions: {
+    createGuest: function(){}
+  }
 });
 
 App.GuestController = Ember.ObjectController.extend({
@@ -52,3 +63,28 @@ App.Guest.FIXTURES = [
   name: 'Leticia',
   guestHasAttended: false
 }];
+
+
+// COPY & PASTE STUFF
+
+// EXACT CHARACTERS FILTERING
+// filteredList: function(){
+//   var list = this.get('list'),
+//       filter = this.get('filter');
+
+//   if (!filter) { return list; }
+
+//   return list.filter(function(item) {
+//     return item.name.indexOf(filter) !== -1;
+//   });
+// }.property('list.@each', 'filter'),
+
+// SEARCH BAR LAYOUT
+    // <nav class="navbar navbar-default" role="navigation">
+    //   <form class="navbar-form navbar-left" role="search">
+    //     <div class="form-group">
+    //       {{input type="text" class="form-control guest-search" placeholder="Search" value=searchFilter}}
+    //     </div>
+    //   </form>
+    // </nav>
+

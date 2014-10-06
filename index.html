@@ -18,7 +18,7 @@
   <script type="text/x-handlebars" data-template-name="guests">
     <div class="container">
       {{#each}}
-      <div class='row'>
+      <div {{bind-attr class=":row guestHasAttended:attended"}}>
         <p class='pull-left'>{{name}}</p>
         <p class='pull-right'>
           {{#if guestHasAttended}}
