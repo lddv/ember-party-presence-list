@@ -31,7 +31,27 @@ App.GuestsController = Ember.ArrayController.extend({
 });
 
 App.GuestController = Ember.ObjectController.extend({
+  isEditing: false,
+
   actions: {
+    editName: function(){
+      this.set('isEditing', true);
+    },
+    acceptChanges: function(){
+      this.set('isEditing', false);
+
+      if (Ember.isEmpty(this.get('model.name'))) {
+        this.send('removeGuest');
+      } else {
+        this.get('model').save();
+      }
+    },
+    removeGuest: function () {
+      var guest = this.get('model');
+      guest.deleteRecord();
+      guest.save();
+    },
+
     toggleAttendance: function(value){
       var guest = this.get('model');
       guest.set('guestHasAttended', value);

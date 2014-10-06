@@ -19,7 +19,16 @@
     <div class="container">
       {{#each}}
       <div {{bind-attr class=":row guestHasAttended:attended"}}>
-        <p class='pull-left'>{{name}}</p>
+
+        {{#if isEditing}}
+          {{input class="edit" value=name focus-out="acceptChanges" insert-newline="acceptChanges"}}
+        {{else}}
+          <button type="button" class="btn btn-default btn-md" {{action "removeGuest"}}>
+            <span  class="glyphicon glyphicon-trash"></span>
+          </button>
+          <p class='pull-left' {{action "editName" on="doubleClick"}}>{{name}}</p>
+        {{/if}}
+
         <p class='pull-right'>
           {{#if guestHasAttended}}
           <button type="button" class="btn btn-default btn-md" {{action "toggleAttendance" false}}>
